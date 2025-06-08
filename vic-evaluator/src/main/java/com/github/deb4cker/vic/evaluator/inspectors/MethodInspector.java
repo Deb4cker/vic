@@ -43,7 +43,11 @@ public class MethodInspector extends AbstractInspector<Method, MethodStructure> 
         Inspection:
         for (MethodStructure modeledElement : modeledMethods) {
 
-            boolean isImplemented = true;
+            boolean isImplemented = modeledElements.stream()
+                    .anyMatch(modelMethod ->
+                            submittedElements.stream().anyMatch(submittedMethod -> submittedMethod.name().equals(modelMethod.name()))
+                    );
+
             boolean correctModifiers = true;
             boolean correctParameters;
             boolean correctReturnType = true;
