@@ -9,8 +9,8 @@ public class RelationCoordinates {
         String[] coords = relation.getAdditional_attributes().split(";");
         float x1 = Float.parseFloat(coords[0].trim());
         float y1 = Float.parseFloat(coords[1].trim());
-        float x2 = Float.parseFloat(coords[2].trim());
-        float y2 = Float.parseFloat(coords[3].trim());
+        float x2 = Float.parseFloat(coords[coords.length - 2].trim());
+        float y2 = Float.parseFloat(coords[coords.length - 1].trim());
 
         int baseX = relation.getCoordinates().getX();
         int baseY = relation.getCoordinates().getY();
