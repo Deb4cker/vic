@@ -94,8 +94,7 @@ public class UMLParser implements Loggable {
     }
 
     private void parseField(String line, ClassOrInterfaceDeclaration classDeclaration) {
-        Pattern fieldPattern  = Pattern.compile("([+#-])(\\w+):\\s*(\\w+)");
-        Matcher matcher       = fieldPattern.matcher(line);
+        Pattern fieldPattern = Pattern.compile("([+#-])\\s*(\\w+)\\s*:\\s*(\\w+)");        Matcher matcher       = fieldPattern.matcher(line);
         boolean patternFound  = matcher.find();
 
         if (!patternFound) return;
@@ -152,7 +151,7 @@ public class UMLParser implements Loggable {
         if (!params.isBlank()) {
             String[] paramArray = params.split(",");
             for (String param : paramArray) {
-                String[] paramParts = param.trim().split(":");
+                String[] paramParts = param.trim().split("\\s*:\\s*");
                 if (paramParts.length == 2) {
                     String paramName = paramParts[0].trim();
                     String paramType = paramParts[1].trim();
@@ -207,7 +206,7 @@ public class UMLParser implements Loggable {
     }
 
     private Matcher findMethodMatcher(String line) {
-        Pattern methodPattern = Pattern.compile("([+#-])(\\w+)\\((.*?)\\):?\\s*(\\w+)?");
+        Pattern methodPattern = Pattern.compile("([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*(\\w+)?");
         return methodPattern.matcher(line);
     }
 
@@ -217,8 +216,6 @@ public class UMLParser implements Loggable {
             RelationPanel relationPanel = new RelationPanel(relationElement.getPanel_attributes(), relationCoordinates);
             Point start = relationCoordinates.getStartPoint();
             Point end = relationCoordinates.getEndPoint();
-
-            String lt = relationPanel.getLt();
 
             ClassPanel source = null;
             ClassPanel target = null;
@@ -232,15 +229,7 @@ public class UMLParser implements Loggable {
                     target = panel;
                 }
             }
-            if (lt != null) {
-                String trimmed = lt.trim();
-                if (trimmed.startsWith("<<") || trimmed.startsWith("<") ||
-                        (trimmed.length() >= 2 && (trimmed.charAt(1) == '<'))) {
-                    ClassPanel temp = source;
-                    source = target;
-                    target = temp;
-                }
-            }
+
             RelationConnection connection = new RelationConnection(source, target, relationPanel);
             connection.loadRelationInPanels();
         }

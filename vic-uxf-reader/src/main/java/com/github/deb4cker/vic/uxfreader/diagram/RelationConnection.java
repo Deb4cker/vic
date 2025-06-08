@@ -6,8 +6,8 @@ import com.github.deb4cker.vic.uxfreader.parser.RelationPanel;
 import com.github.deb4cker.vic.commons.enums.RelationType;
 
 public class RelationConnection {
-    private final ClassPanel source;
-    private final ClassPanel target;
+    private ClassPanel source;
+    private ClassPanel target;
     private final RelationPanel relationPanel;
     private final RelationType relationType;
 
@@ -34,19 +34,28 @@ public class RelationConnection {
     private RelationType loadRelationType(){
         String lt = relationPanel.getLt();
 
-        if (lt.startsWith("<<-") || lt.startsWith("->>")) return RelationType.INHERITANCE;
+        boolean isInheritance =
+                 (lt.startsWith("<<-") || lt.startsWith("->>"))
+                                       &&
+                !(lt.contains("<<<<-") || lt.contains("->>>>"));
+
+        if (isInheritance){
+            if (lt.startsWith("<<-")) swapConnection();
+            return RelationType.INHERITANCE;
+        }
 
         String m1 = relationPanel.getM1();
         String m2 = relationPanel.getM2();
 
         if (m1 != null){
+            if(m2 == null) swapConnection();
             if (m1.contains("1")) return RelationType.TO_ONE_RELATION;
-            if (m1.contains("*")) return RelationType.TO_MANY_RELATION;
+            if (m1.contains("*") || m1.contains("n")) return RelationType.TO_MANY_RELATION;
         }
 
-        if (m1 != null) {
+        if (m2 != null) {
             if (m2.contains("1")) return RelationType.TO_ONE_RELATION;
-            if (m2.contains("*")) return RelationType.TO_MANY_RELATION;
+            if (m2.contains("*") || m2.contains("n")) return RelationType.TO_MANY_RELATION;
         }
 
         return RelationType.TO_MANY_RELATION;
@@ -67,6 +76,12 @@ public class RelationConnection {
                 target.addSource(new Relation(getSourceName(), RelationType.INHERITANCE));
             }
         }
+    }
+
+    private void swapConnection(){
+        ClassPanel temp = source;
+        source = target;
+        target = temp;
     }
 
     @Override
