@@ -64,13 +64,27 @@ public class UMLParser implements Loggable {
                     }
                 }
                 case TO_MANY_RELATION -> {
+                    String relationClassName = relation.className();
+                    String pluralName = StringUtils.pluralize(relationClassName).toLowerCase();
+
                     ClassOrInterfaceType listType = new ClassOrInterfaceType(null, "ArrayList");
-                    listType.setTypeArguments(new ClassOrInterfaceType(null, relation.className()));
+                    listType.setTypeArguments(new ClassOrInterfaceType(null, relationClassName));
 
                     Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED : Modifier.Keyword.PRIVATE;
-                    classDeclaration.addField(listType, StringUtils.pluralize(relation.className()).toLowerCase(), fieldModifier);
+                    classDeclaration.addField(listType, pluralName, fieldModifier);
 
                     compilationUnit.addImport("java.util.ArrayList");
+
+                    MethodDeclaration addMethod = classDeclaration.addMethod("add" + relationClassName, Modifier.Keyword.PUBLIC);
+                    Parameter param = new Parameter(new ClassOrInterfaceType(null, relationClassName), relationClassName.toLowerCase());
+                    addMethod.addParameter(param);
+                    addMethod.setBody(new BlockStmt().addStatement(
+                            "this." + pluralName + ".add(" + relationClassName.toLowerCase() + ");"
+                    ));
+
+                    MethodDeclaration getMethod = classDeclaration.addMethod("get" + pluralName, Modifier.Keyword.PUBLIC);
+                    getMethod.setType(listType);
+                    getMethod.setBody(new BlockStmt().addStatement("return this." + pluralName + ";"));
                 }
                 case TO_ONE_RELATION -> {
                     Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED : Modifier.Keyword.PRIVATE;
