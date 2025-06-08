@@ -29,7 +29,7 @@ fontsize=10
     <id>UMLClass</id>
     <coordinates>
       <x>680</x>
-      <y>280</y>
+      <y>190</y>
       <w>210</w>
       <h>200</h>
     </coordinates>
@@ -86,29 +86,29 @@ fontsize=10
     <id>Relation</id>
     <coordinates>
       <x>880</x>
-      <y>470</y>
+      <y>380</y>
       <w>150</w>
-      <h>160</h>
+      <h>250</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;130.0;140.0</additional_attributes>
+    <additional_attributes>10.0;10.0;130.0;230.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>570</x>
-      <y>470</y>
+      <y>380</y>
       <w>130</w>
-      <h>160</h>
+      <h>250</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;140.0</additional_attributes>
+    <additional_attributes>110.0;10.0;10.0;230.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>190</x>
-      <y>280</y>
+      <x>270</x>
+      <y>350</y>
       <w>300</w>
       <h>170</h>
     </coordinates>
@@ -119,7 +119,6 @@ fontsize=10
 +Dono(nome: String)
 +getNome(): String
 +setNome(nome: String): void
-+addPet(pet: Pet): void
 +removerPetByNome(nomePet: String): void
 -removerPet(pet: Pet): void
 +toString(): String</panel_attributes>
@@ -128,14 +127,14 @@ fontsize=10
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
-      <y>340</y>
-      <w>220</w>
-      <h>40</h>
+      <x>540</x>
+      <y>260</y>
+      <w>160</w>
+      <h>190</h>
     </coordinates>
     <panel_attributes>lt=-
 m2=0..n
 possui &gt;</panel_attributes>
-    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+    <additional_attributes>30.0;170.0;10.0;70.0;80.0;70.0;20.0;10.0;140.0;10.0</additional_attributes>
   </element>
 </diagram>

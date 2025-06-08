@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>570</x>
+      <y>330</y>
+      <w>220</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Portal
+--
+- nome: String
+- url: String
+--
++ Portal(nome: String, url: String)
++ toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>330</y>
+      <w>300</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Anuncio
+--
+- produto: String
+- valorVenda: double
+- cidade: String
+- estado: String
+--
++ setProduto(produto: String): boolean
++ setValorVenda(valorVenda: double): boolean
++ setCidade(cidade: String): boolean
++ setEstado(estado:String): boolean
++ toString(): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>980</x>
+      <y>600</y>
+      <w>290</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>AnuncioPago
+--
+- dias: int
+- valorPago: double
+--
++ setDias(dias: int): boolean
++ setValorPago(valorPago: double): boolean
++ toString(): String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>500</y>
+      <w>30</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>370</y>
+      <w>220</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=0..n
+registra &gt;</panel_attributes>
+    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+</diagram>
