@@ -48,9 +48,9 @@ Independentemente da IDE, o processo geral para importar um projeto Maven com m�
 
 O projeto VIC utiliza uma pasta `local-dev/` na raiz para simular entradas durante o desenvolvimento local. Você pode usar o parâmetro `--dev` de diferentes formas:
 
-*   `--dev`: Executa todos os arquivos `.uxf` encontrados em todas as subpastas dentro de `local-dev/`.
-*   `--dev <nome-da-pasta>`: Executa todos os arquivos `.uxf` dentro da subpasta especificada em `local-dev/`.
-*   `--dev <nome-da-pasta> <nome-do-arquivo-uxf>`: Executa apenas o arquivo `.uxf` específico dentro da subpasta indicada em `local-dev/`.
+*   `-d`: Executa todos os arquivos `.uxf` encontrados em todas as subpastas dentro de `local-dev/`.
+*   `-d <nome-da-pasta>`: Executa todos os arquivos `.uxf` dentro da subpasta especificada em `local-dev/`.
+*   `-d <nome-da-pasta> <nome-do-arquivo-uxf>`: Executa apenas o arquivo `.uxf` específico dentro da subpasta indicada em `local-dev/`.
 
 ## 📌 Futuras Melhorias
 
@@ -124,9 +124,9 @@ Regardless of the IDE, the general process for importing a multi-module Maven pr
 
 The VIC project uses a `local-dev/` folder at the root to simulate inputs during local development. You can use the `--dev` parameter in different ways:
 
-*   `--dev`: Executes all `.uxf` files found in all subfolders within `local-dev/`.
-*   `--dev <folder-name>`: Executes all `.uxf` files within the specified subfolder in `local-dev/`.
-*   `--dev <folder-name> <uxf-file-name>`: Executes only the specific `.uxf` file within the indicated subfolder in `local-dev/`.
+*   `-d`: Executes all `.uxf` files found in all subfolders within `local-dev/`.
+*   `-d <folder-name>`: Executes all `.uxf` files within the specified subfolder in `local-dev/`.
+*   `-d <folder-name> <uxf-file-name>`: Executes only the specific `.uxf` file within the indicated subfolder in `local-dev/`.
 
 ## 📌 Future Improvements
 
