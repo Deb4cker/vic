@@ -30,7 +30,7 @@ public class ConstructorInspector extends AbstractInspector<Constructor<?>, Cons
 
         List<ImplementationFlag> flags = checkOverloads(modeledConstructorsList, submittedConstructorsList);
 
-        boolean totallyCorrect = ImplementationFlag.onlyCorrectFlagsIn(flags);
+        boolean totallyCorrect = ImplementationFlag.onlyCorrectFlagsIn(flags) && !modeledConstructorsList.isEmpty();
         if (totallyCorrect) flags.add(new CorrectlyImplementedConstructor());
 
         return flags;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>890</x>
+      <y>440</y>
+      <w>200</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Pessoa
+--
+- nome : String
+--
++setNome(nome: String)</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

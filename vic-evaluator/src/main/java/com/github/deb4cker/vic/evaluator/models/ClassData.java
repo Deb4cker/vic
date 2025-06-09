@@ -1,5 +1,7 @@
 package com.github.deb4cker.vic.evaluator.models;
 
+import com.github.deb4cker.vic.evaluator.utils.ReflectionUtils;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -15,7 +17,7 @@ public class ClassData {
         className = clazz.getName();
         fields = clazz.getDeclaredFields();
         methods = clazz.getDeclaredMethods();
-        constructors = clazz.getDeclaredConstructors();
+        constructors = ReflectionUtils.getDeclaredConstructorsExcludingDefault(clazz);
         superClass = clazz.getSuperclass();
     }
 
