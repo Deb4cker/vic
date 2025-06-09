@@ -1,5 +1,6 @@
 package com.github.deb4cker.vic.uxfreader.parser;
 
+import com.github.deb4cker.vic.commons.EvaluationBypassCode;
 import com.github.deb4cker.vic.uxfreader.diagram.*;
 import com.github.deb4cker.vic.uxfreader.exception.DiagramSyntaxErrorException;
 import com.github.deb4cker.vic.uxfreader.models.ParsedClassObject;
@@ -71,20 +72,17 @@ public class UMLParser implements Loggable {
                     listType.setTypeArguments(new ClassOrInterfaceType(null, relationClassName));
 
                     Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED : Modifier.Keyword.PRIVATE;
-                    classDeclaration.addField(listType, pluralName, fieldModifier);
+                    classDeclaration.addField(listType, EvaluationBypassCode.generateEvaluationBypassCode(), fieldModifier);
 
                     compilationUnit.addImport("java.util.ArrayList");
 
                     MethodDeclaration addMethod = classDeclaration.addMethod("add" + relationClassName, Modifier.Keyword.PUBLIC);
-                    Parameter param = new Parameter(new ClassOrInterfaceType(null, relationClassName), relationClassName.toLowerCase());
+                    Parameter param = new Parameter(new ClassOrInterfaceType(null, relationClassName), EvaluationBypassCode.generateEvaluationBypassCode());
                     addMethod.addParameter(param);
-                    addMethod.setBody(new BlockStmt().addStatement(
-                            "this." + pluralName + ".add(" + relationClassName.toLowerCase() + ");"
-                    ));
 
-                    MethodDeclaration getMethod = classDeclaration.addMethod("get" + pluralName, Modifier.Keyword.PUBLIC);
+                    MethodDeclaration getMethod = classDeclaration.addMethod("get" +  StringUtils.capitalize(pluralName), Modifier.Keyword.PUBLIC);
                     getMethod.setType(listType);
-                    getMethod.setBody(new BlockStmt().addStatement("return this." + pluralName + ";"));
+                    getMethod.setBody(new BlockStmt().addStatement("return null;"));
                 }
                 case TO_ONE_RELATION -> {
                     Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED : Modifier.Keyword.PRIVATE;

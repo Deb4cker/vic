@@ -2,7 +2,7 @@ package com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.cons
 
 import com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.ImplementationInconsistency;
 
-import static com.github.deb4cker.vic.evaluator.constants.InconsistencyMessages.MISSING_CONSTRUCTOR_IN_CLASS;
+import static com.github.deb4cker.vic.evaluator.commons.constants.InconsistencyMessages.MISSING_CONSTRUCTOR_IN_CLASS;
 
 public class MissingConstructorInClassInconsistency extends ImplementationInconsistency {
     public MissingConstructorInClassInconsistency(String className) {

@@ -1,5 +1,6 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
+import com.github.deb4cker.vic.commons.EvaluationBypassCode;
 import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
 import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedAttribute;
 import com.github.deb4cker.vic.evaluator.implementationFlags.factory.impl.AttributeFlagFactory;
@@ -25,6 +26,9 @@ public class AttributeInspector extends AbstractInspector<Field, AttributeStruct
 
         List<ImplementationFlag> flags = new ArrayList<>();
         for (AttributeStructure modelAttribute : modeledElements) {
+
+            boolean nonEvaluatedElement = modelAttribute.name().contains(EvaluationBypassCode.CODE);
+            if(nonEvaluatedElement) continue;
 
             boolean isImplemented = true;
             boolean correctModifiers = true;

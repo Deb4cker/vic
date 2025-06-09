@@ -1,6 +1,6 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
-import com.github.deb4cker.vic.evaluator.interfaces.ParametrizedElementInspector;
+import com.github.deb4cker.vic.evaluator.commons.interfaces.ParametrizedElementInspector;
 import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
 import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedConstructor;
 import com.github.deb4cker.vic.evaluator.implementationFlags.factory.impl.ConstructorFlagFactory;

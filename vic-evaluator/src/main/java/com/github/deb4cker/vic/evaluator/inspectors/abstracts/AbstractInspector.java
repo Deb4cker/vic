@@ -1,7 +1,7 @@
 package com.github.deb4cker.vic.evaluator.inspectors.abstracts;
 
-import com.github.deb4cker.vic.evaluator.interfaces.ElementStructure;
-import com.github.deb4cker.vic.evaluator.interfaces.Inspector;
+import com.github.deb4cker.vic.evaluator.commons.interfaces.ElementStructure;
+import com.github.deb4cker.vic.evaluator.commons.interfaces.Inspector;
 import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
 import com.github.deb4cker.vic.evaluator.implementationFlags.factory.interfaces.InconsistencyFlagFactory;
 

@@ -1,5 +1,6 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
+import com.github.deb4cker.vic.commons.EvaluationBypassCode;
 import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
 import com.github.deb4cker.vic.evaluator.implementationFlags.factory.interfaces.ParameterFlagFactory;
 import com.github.deb4cker.vic.evaluator.inspectors.abstracts.AbstractInspector;
@@ -25,6 +26,9 @@ public class ParametersInspector extends AbstractInspector<Parameter, ParameterS
 
         List<ImplementationFlag> flags = new ArrayList<>();
         for (ParameterStructure modeledParameter : modeledElements) {
+
+            boolean nonEvaluatedElement = modeledParameter.name().contains(EvaluationBypassCode.CODE);
+            if(nonEvaluatedElement) continue;
 
             boolean isImplemented = false;
             boolean correctType = true;

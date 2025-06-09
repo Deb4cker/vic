@@ -1,6 +1,6 @@
 package com.github.deb4cker.vic.evaluator.utils;
 
-import com.github.deb4cker.vic.evaluator.interfaces.Inspector;
+import com.github.deb4cker.vic.evaluator.commons.interfaces.Inspector;
 import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
 
 import java.util.ArrayList;

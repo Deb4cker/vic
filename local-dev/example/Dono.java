@@ -36,6 +36,10 @@ public class Dono {
         pets.remove(pet);
     }
 
+    public ArrayList<Pet> getPets(){
+        return pets;
+    }
+
     @Override
     public String toString(){
         return nome;

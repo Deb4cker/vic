@@ -2,7 +2,7 @@ package com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.attr
 
 import com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.ImplementationInconsistency;
 
-import static com.github.deb4cker.vic.evaluator.constants.InconsistencyMessages.INCORRECT_ATTRIBUTE_TYPE;
+import static com.github.deb4cker.vic.evaluator.commons.constants.InconsistencyMessages.INCORRECT_ATTRIBUTE_TYPE;
 
 public class IncorrectAttributeTypeInconsistency extends ImplementationInconsistency {
     public IncorrectAttributeTypeInconsistency(String attributeName, String expectedAttributeType) {

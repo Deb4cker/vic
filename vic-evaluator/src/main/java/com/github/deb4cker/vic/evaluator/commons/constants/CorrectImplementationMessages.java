@@ -1,4 +1,4 @@
-package com.github.deb4cker.vic.evaluator.constants;
+package com.github.deb4cker.vic.evaluator.commons.constants;
 
 public class CorrectImplementationMessages {
     public static final String CORRECT_IMPLEMENTATION_OF_ATTRIBUTE = "Atributo %s";

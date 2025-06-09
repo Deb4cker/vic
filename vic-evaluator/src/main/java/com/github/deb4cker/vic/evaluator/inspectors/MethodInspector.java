@@ -1,6 +1,6 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
-import com.github.deb4cker.vic.evaluator.interfaces.ParametrizedElementInspector;
+import com.github.deb4cker.vic.evaluator.commons.interfaces.ParametrizedElementInspector;
 import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
 import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedMethod;
 import com.github.deb4cker.vic.evaluator.implementationFlags.factory.impl.MethodFlagFactory;
@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.deb4cker.vic.evaluator.constants.SemanticHelpers.OVERLOADS;
-import static com.github.deb4cker.vic.evaluator.constants.SemanticHelpers.SINGLE_IMPLEMENTATIONS;
+import static com.github.deb4cker.vic.evaluator.commons.constants.SemanticHelpers.OVERLOADS;
+import static com.github.deb4cker.vic.evaluator.commons.constants.SemanticHelpers.SINGLE_IMPLEMENTATIONS;
 
 public class MethodInspector extends AbstractInspector<Method, MethodStructure> implements ParametrizedElementInspector, Loggable {
 

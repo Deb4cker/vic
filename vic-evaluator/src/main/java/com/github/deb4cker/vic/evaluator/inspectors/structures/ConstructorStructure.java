@@ -1,7 +1,7 @@
 package com.github.deb4cker.vic.evaluator.inspectors.structures;
 
-import com.github.deb4cker.vic.evaluator.interfaces.ElementStructure;
-import com.github.deb4cker.vic.evaluator.interfaces.ParametrizedStructure;
+import com.github.deb4cker.vic.evaluator.commons.interfaces.ElementStructure;
+import com.github.deb4cker.vic.evaluator.commons.interfaces.ParametrizedStructure;
 
 import java.lang.reflect.Parameter;
 import java.util.Arrays;

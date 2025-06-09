@@ -1,4 +1,4 @@
-package com.github.deb4cker.vic.evaluator.interfaces;
+package com.github.deb4cker.vic.evaluator.commons.interfaces;
 
 import java.lang.reflect.Parameter;
 import java.util.Arrays;

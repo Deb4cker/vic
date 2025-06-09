@@ -2,7 +2,7 @@ package com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.attr
 
 import com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.ImplementationInconsistency;
 
-import static com.github.deb4cker.vic.evaluator.constants.InconsistencyMessages.MISSING_ATTRIBUTE_IN_CLASS;
+import static com.github.deb4cker.vic.evaluator.commons.constants.InconsistencyMessages.MISSING_ATTRIBUTE_IN_CLASS;
 
 public class MissingAttributeInClassInconsistency extends ImplementationInconsistency {
     public MissingAttributeInClassInconsistency(String fieldName, String className) {

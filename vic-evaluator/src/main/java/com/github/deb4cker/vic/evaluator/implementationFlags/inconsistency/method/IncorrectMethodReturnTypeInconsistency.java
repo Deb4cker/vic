@@ -1,7 +1,7 @@
 package com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.method;
 
 import com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.ImplementationInconsistency;
-import static com.github.deb4cker.vic.evaluator.constants.InconsistencyMessages.INCORRECT_METHOD_RETURN_TYPE;
+import static com.github.deb4cker.vic.evaluator.commons.constants.InconsistencyMessages.INCORRECT_METHOD_RETURN_TYPE;
 
 public class IncorrectMethodReturnTypeInconsistency extends ImplementationInconsistency {
 

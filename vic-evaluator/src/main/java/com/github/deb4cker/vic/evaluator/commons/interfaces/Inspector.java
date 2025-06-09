@@ -1,4 +1,4 @@
-package com.github.deb4cker.vic.evaluator.interfaces;
+package com.github.deb4cker.vic.evaluator.commons.interfaces;
 
 
 import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
