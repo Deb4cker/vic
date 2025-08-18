@@ -218,7 +218,9 @@ public class UMLParser implements Loggable {
     }
 
     private Matcher findMethodMatcher(String line) {
-        Pattern methodPattern = Pattern.compile("([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*(\\w+)?");
+        Pattern methodPattern = Pattern.compile(
+                "([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*([^\\s]+(?:\\s*\\[\\s*\\])*)?"
+        );
         return methodPattern.matcher(line);
     }
 
