@@ -120,6 +120,7 @@ public class UMLParser implements Loggable {
     }
 
     private void parseMethodOrConstructor(String line, ClassOrInterfaceDeclaration classDeclaration, String className, String superClassParams) {
+        boolean isAbstract = line.startsWith("/") && line.endsWith("/");
         Matcher matcher = findMethodMatcher(line);
         boolean patternFound  = matcher.find();
 
@@ -155,6 +156,13 @@ public class UMLParser implements Loggable {
             MethodDeclaration methodDeclaration = (MethodDeclaration) declaration;
             String type = returnType != null ? returnType : "void";
             methodDeclaration.setType(type);
+
+            if(isAbstract){
+                methodDeclaration.setAbstract(true);
+                methodDeclaration.removeBody();
+                return;
+            }
+
             addDefaultMethodBody(methodDeclaration, type);
         }
     }

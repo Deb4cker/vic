@@ -72,12 +72,11 @@ public class ApplicationPipeline implements Loggable
 
             }
 
-            String allNecessaryFilesSubmitted = verifySubmittedFiles(modeledClasses, submittedJavaFiles);
-            if (!allNecessaryFilesSubmitted.isEmpty()) return allNecessaryFilesSubmitted;
+            VerificationResult allNecessaryFilesSubmitted = verifySubmittedFiles(modeledClasses, submittedJavaFiles);
+            if (!allNecessaryFilesSubmitted.message.isEmpty()) return allNecessaryFilesSubmitted.message;
 
-            compileSubmittedJavaFiles(submittedJavaFiles);
+            compileSubmittedJavaFiles(allNecessaryFilesSubmitted.validSubmittedFiles());
             List<ClassData> submittedDotClassFiles = loadSubmittedClasses();
-
 
             List<RelationshipData> modeledRelations = RelationshipMapper.map(modeledClasses);
             List<RelationshipData> submittedRelations = RelationshipMapper.map(submittedDotClassFiles);
@@ -193,20 +192,22 @@ public class ApplicationPipeline implements Loggable
                 .toList();
     }
 
-    private String verifySubmittedFiles(List<ClassData> modeledClasses, List<File> submittedJavaFiles){
+    public record VerificationResult(List<File> validSubmittedFiles, String message) {}
+    public VerificationResult verifySubmittedFiles(List<ClassData> modeledClasses, List<File> submittedJavaFiles) {
         Map<ClassData, File> respectiveSubmittedClasses =
                 modeledClasses.stream()
                         .flatMap(classData -> submittedJavaFiles.stream()
-                                .filter(file -> StringUtils.nameWithoutExtension(file.getName()).equals(StringUtils.nameWithoutExtension(classData.getClassName())))
-                                .map(file -> Map.entry(classData, file))
-                        )
+                                .filter(file -> StringUtils.nameWithoutExtension(file.getName())
+                                        .equals(StringUtils.nameWithoutExtension(classData.getClassName())))
+                                .map(file -> Map.entry(classData, file)))
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         List<String> notMappedClasses = new ArrayList<>();
 
         for (ClassData classData : modeledClasses) {
-            File file = respectiveSubmittedClasses.get(classData);
-            if (file == null) notMappedClasses.add(classData.getClassName());
+            if (!respectiveSubmittedClasses.containsKey(classData)) {
+                notMappedClasses.add(classData.getClassName());
+            }
         }
 
         StringBuilder builder = new StringBuilder();
@@ -217,6 +218,8 @@ public class ApplicationPipeline implements Loggable
             }
         }
 
-        return builder.toString();
+        List<File> validFiles = new ArrayList<>(respectiveSubmittedClasses.values());
+
+        return new VerificationResult(validFiles, builder.toString());
     }
 }
