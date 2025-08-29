@@ -106,7 +106,7 @@ public class UMLParser implements Loggable {
     }
 
     private void parseField(String line, ClassOrInterfaceDeclaration classDeclaration) {
-        Pattern fieldPattern = Pattern.compile("([+#-])\\s*(\\w+)\\s*:\\s*(\\w+)");        Matcher matcher       = fieldPattern.matcher(line);
+        Pattern fieldPattern = Pattern.compile("([+#-])\\s*(\\w+)\\s*:\\s*([\\w.$<>?,]+(?:\\s*\\[\\s*])*)");        Matcher matcher       = fieldPattern.matcher(line);
         boolean patternFound  = matcher.find();
 
         if (!patternFound) return;
@@ -227,7 +227,7 @@ public class UMLParser implements Loggable {
 
     private Matcher findMethodMatcher(String line) {
         Pattern methodPattern = Pattern.compile(
-                "([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*([^\\s]+(?:\\s*\\[\\s*\\])*)?"
+                "([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*([^\\s]+(?:\\s*\\[\\s*])*)?"
         );
         return methodPattern.matcher(line);
     }
