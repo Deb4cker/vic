@@ -12,6 +12,7 @@ public class ClassData {
     private final Method[] methods;
     private final Constructor<?>[] constructors;
     private final Class<?> superClass;
+    private final String classSimpleName;
 
     public ClassData(Class<?> clazz) {
         className = clazz.getName();
@@ -19,10 +20,14 @@ public class ClassData {
         methods = clazz.getDeclaredMethods();
         constructors = ReflectionUtils.getDeclaredConstructorsExcludingDefault(clazz);
         superClass = clazz.getSuperclass();
+        classSimpleName = clazz.getSimpleName();
     }
 
     public String getClassName() {
         return className;
+    }
+    public String getClassSimpleName() {
+        return classSimpleName;
     }
 
     public Field[] getFields() {

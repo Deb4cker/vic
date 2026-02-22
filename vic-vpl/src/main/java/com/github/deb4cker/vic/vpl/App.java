@@ -33,8 +33,7 @@ public class App
         evaluateImplementation(LOCAL_FOLDER, hasArgs? args[0] : null);
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    //----------------------------------------------------------------------------
     private static void evaluateImplementation(String folder, String uxfName){
         File uxfFile = checkForUxfFile(folder, uxfName);
         List<File> submittedJavaFiles = checkForJavaFiles(folder);

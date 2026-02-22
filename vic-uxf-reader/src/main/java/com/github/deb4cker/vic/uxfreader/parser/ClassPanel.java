@@ -17,8 +17,8 @@ public class ClassPanel {
     private final String className;
     private final Coordinates coordinates;
 
-    private final List<Relation> sources = new ArrayList<>(); //classes que apontam para cá;
-    private final List<Relation> targets = new ArrayList<>(); //classes que estamos apontando;
+    private final List<Relation> sources = new ArrayList<>();
+    private final List<Relation> targets = new ArrayList<>();
 
     public ClassPanel(String panelAttributes, Coordinates coordinates) {
         sections = panelAttributes.split("--");

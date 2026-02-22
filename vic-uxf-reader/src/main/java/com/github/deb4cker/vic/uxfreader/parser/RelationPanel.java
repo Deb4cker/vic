@@ -41,26 +41,31 @@ public class RelationPanel {
 
     private void findFields(String[] sections) {
         for (String section : sections) {
-            if (section == null || section.isBlank()) continue;
-
-            if (section.startsWith("lt=")) {
-                lt = section.trim().replace("lt=", "");
-                continue;
-            }
-
-            if (section.startsWith("m1=")) {
-                m1 = section.trim().replace("m1=", "");
-                continue;
-            }
-
-            if (section.startsWith("m2=")) {
-                m2 = section.trim().replace("m2=", "");
-                continue;
-            }
-
-            direction = section;
-
-            if (lt != null && m1 != null && m2 != null) break;
+            parseSection(section);
+            if (lt != null && m1 != null && m2 != null)
+                break;
         }
+    }
+
+    private void parseSection(String section) {
+        if (section == null || section.isBlank())
+            return;
+
+        String trimmed = section.trim();
+
+        if (trimmed.startsWith("lt=")) {
+            lt = trimmed.replace("lt=", "");
+            return;
+        }
+        if (trimmed.startsWith("m1=")) {
+            m1 = trimmed.replace("m1=", "");
+            return;
+        }
+        if (trimmed.startsWith("m2=")) {
+            m2 = trimmed.replace("m2=", "");
+            return;
+        }
+
+        direction = section;
     }
 }

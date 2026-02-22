@@ -27,43 +27,45 @@ public class RelationConnection {
         return target.getClassName();
     }
 
-    public RelationType getRelationType() {
-        return relationType;
-    }
-
-    private RelationType loadRelationType(){
+    private RelationType loadRelationType() {
         String lt = relationPanel.getLt();
 
-        boolean isInheritance =
-                 (lt.startsWith("<<-") || lt.startsWith("->>"))
-                                       &&
-                !(lt.contains("<<<<-") || lt.contains("->>>>"));
-
-        if (isInheritance){
-            if (lt.startsWith("<<-")) swapConnection();
+        if (isInheritanceArrow(lt)) {
+            if (lt.startsWith("<<-"))
+                swapConnection();
             return RelationType.INHERITANCE;
         }
 
         String m1 = relationPanel.getM1();
         String m2 = relationPanel.getM2();
 
-        if (m1 != null){
-            if(m2 == null) swapConnection();
-            if (m1.contains("1")) return RelationType.TO_ONE_RELATION;
-            if (m1.contains("*") || m1.contains("n")) return RelationType.TO_MANY_RELATION;
+        if (m1 != null) {
+            if (m2 == null)
+                swapConnection();
+            return parseMultiplicity(m1);
         }
 
         if (m2 != null) {
-            if (m2.contains("1")) return RelationType.TO_ONE_RELATION;
-            if (m2.contains("*") || m2.contains("n")) return RelationType.TO_MANY_RELATION;
+            return parseMultiplicity(m2);
         }
 
         return RelationType.TO_MANY_RELATION;
     }
 
-    public void loadRelationInPanels(){
+    private static boolean isInheritanceArrow(String lt) {
+        return (lt.startsWith("<<-") || lt.startsWith("->>"))
+                && !(lt.contains("<<<<-") || lt.contains("->>>>"));
+    }
+
+    private static RelationType parseMultiplicity(String m) {
+        if (m.contains("1"))
+            return RelationType.TO_ONE_RELATION;
+        return RelationType.TO_MANY_RELATION;
+    }
+
+    public void loadRelationInPanels() {
         switch (relationType) {
-            case TO_ONE_RELATION ->{
+            case TO_ONE_RELATION -> {
                 source.addTarget(new Relation(getTargetName(), RelationType.TO_ONE_RELATION));
                 target.addSource(new Relation(getSourceName(), RelationType.TO_ONE_RELATION));
             }
@@ -78,7 +80,7 @@ public class RelationConnection {
         }
     }
 
-    private void swapConnection(){
+    private void swapConnection() {
         ClassPanel temp = source;
         source = target;
         target = temp;

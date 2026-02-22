@@ -1,6 +1,6 @@
 package com.github.deb4cker.vic.commons;
 
-public class StringUtils {
+public final class StringUtils {
     public static String nameWithoutExtension(String str) {
         String fileName = str.substring(str.lastIndexOf('/') + 1);
         fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
@@ -49,4 +49,6 @@ public class StringUtils {
 
         return word + "s";
     }
+
+    private StringUtils(){}
 }

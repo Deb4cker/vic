@@ -1,6 +1,6 @@
 package com.github.deb4cker.vic.evaluator.commons.constants;
 
-public class InconsistencyMessages
+public final class InconsistencyMessages
 {
 	private static final String SHOULD_BE = "deveria ser %s.";
 	private static final String NOT_PRESENT = "não está presente na classe \"%s\". A assinatura deve estar EXATAMENTE igual ao do diagrama.";
@@ -26,5 +26,7 @@ public class InconsistencyMessages
 	public static final String MISSING_METHOD_IN_CLASS = "O método \"%s\" " + NOT_PRESENT;
 
 	public static final String RELATIONSHIP_NOT_IMPLEMENTED = "O relacionameto \"%s\" não foi implementado.";
+
+    private InconsistencyMessages(){}
 }
 

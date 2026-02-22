@@ -1,14 +1,14 @@
 package com.github.deb4cker.vic.vpl.cli;
 
 import com.github.deb4cker.vic.evaluator.analyzers.AnalysisResult;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
 
 import java.util.List;
 import java.util.Locale;
 
-public class ReportCreator {
+public final class ReportCreator {
 
-    private static final double gradeScale = 10.0;
+    private static final double GRADE_SCALE = 10.0;
 
     public static String create(List<AnalysisResult> results, int exerciseSectionCount) {
         results = results.stream().sorted().toList();
@@ -38,7 +38,7 @@ public class ReportCreator {
     }
 
     private static String calculateGradeText(int correctExerciseCount, int exerciseSectionCount) {
-        double exerciseValue = gradeScale / (double) exerciseSectionCount;
+        double exerciseValue = GRADE_SCALE / exerciseSectionCount;
         String gradeText = String.format(Locale.US, "%.2f", exerciseValue * correctExerciseCount);
 
         boolean validGradeText = !gradeText.isEmpty() && !gradeText.equals("NaN");
@@ -48,4 +48,6 @@ public class ReportCreator {
 
         return "";
     }
+
+    private ReportCreator(){}
 }

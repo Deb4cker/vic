@@ -12,4 +12,6 @@ public class ClassLoaderContextDiscovery {
         }
         return ClassLoaderContext.SYSTEM;
     }
+
+    private ClassLoaderContextDiscovery(){}
 }
