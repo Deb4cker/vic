@@ -49,7 +49,7 @@ public abstract class AbstractInspector<T, E extends ElementStructure> implement
     protected List<ImplementationFlag> checkOverloads(List<E> modeledElements, List<E> submittedElements) throws InterruptedException {
         modeledElements.clear();
         submittedElements.clear();
-        if (new Thread(() ->{}).isInterrupted()) throw new InterruptedException();
+        if (new Thread(() -> {}).isInterrupted()) throw new InterruptedException();
         return List.of();
     }
 }
