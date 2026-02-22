@@ -1,10 +1,10 @@
 package com.github.deb4cker.vic.evaluator.analyzers;
 
 import com.github.deb4cker.vic.evaluator.models.relations.RelationshipData;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.AllRelationshipsCorrectlyImplemented;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedRelationship;
-import com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.relationship.RelationshipNotImplementedInconsistency;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.AllRelationshipsCorrectlyImplemented;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectlyImplementedRelationship;
+import com.github.deb4cker.vic.evaluator.implementationflags.inconsistency.relationship.RelationshipNotImplementedInconsistency;
 
 import java.util.ArrayList;
 import java.util.List;

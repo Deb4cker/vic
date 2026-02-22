@@ -4,7 +4,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-public class Printer {
+public final class Printer {
     private static final PrintWriter CONSOLE_WRITER = new PrintWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8), true);
 
     public static void printDirectlyToConsole(String text) {
@@ -13,4 +13,6 @@ public class Printer {
             CONSOLE_WRITER.println(line);
         }
     }
+
+    private Printer() {}
 }

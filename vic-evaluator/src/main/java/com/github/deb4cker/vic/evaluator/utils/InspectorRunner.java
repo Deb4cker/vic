@@ -1,7 +1,9 @@
 package com.github.deb4cker.vic.evaluator.utils;
 
 import com.github.deb4cker.vic.evaluator.commons.interfaces.Inspector;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+
+import com.github.deb4cker.vic.evaluator.exception.InspectorExecutionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,8 @@ public class InspectorRunner extends Thread {
         try {
             flags.addAll(inspector.inspect());
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            throw new InspectorExecutionException("Inspector thread was interrupted", e);
         }
         flags.sort(ImplementationFlag::compareTo);
     }

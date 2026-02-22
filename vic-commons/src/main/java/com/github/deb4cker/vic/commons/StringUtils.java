@@ -1,6 +1,6 @@
 package com.github.deb4cker.vic.commons;
 
-public class StringUtils {
+public final class StringUtils {
     public static String nameWithoutExtension(String str) {
         String fileName = str.substring(str.lastIndexOf('/') + 1);
         fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
@@ -21,36 +21,34 @@ public class StringUtils {
     }
 
     public static String pluralize(String word) {
-        if (word == null || word.isEmpty()) return word;
+        if (word == null || word.length() < 2) return word;
 
         word = word.trim();
+        String wordLower = word.toLowerCase();
+        int len = word.length();
 
-        if (word.endsWith("r") || word.endsWith("s") || word.endsWith("z")) {
+        if (wordLower.endsWith("r") || wordLower.endsWith("s") || wordLower.endsWith("z")) {
             return word + "es";
         }
-        if (word.endsWith("m")) {
-            return word.substring(0, word.length() - 1) + "ns";
+
+        if (wordLower.endsWith("m")) {
+            return word.substring(0, len - 1) + "ns";
         }
 
-        String substring = word.substring(0, word.length() - 2);
-
-        if (word.endsWith("ão")) {
-            return substring + "ões";
-        }
-        if (word.endsWith("l")) {
-            return word.substring(0, word.length() - 1) + "is";
-        }
-        if (word.endsWith("il")) {
-            return substring + "is";
-        }
-        if (word.endsWith("al") || word.endsWith("el") || word.endsWith("ul") || word.endsWith("ol")) {
-            return substring + "eis";
+        if (wordLower.endsWith("ão")) {
+            return word.substring(0, len - 2) + "ões";
         }
 
-        if (!word.endsWith("s")) {
-            return word + "s";
+        if (wordLower.endsWith("il")) {
+            return word.substring(0, len - 2) + "is";
         }
 
-        return word;
+        if (wordLower.endsWith("l")) {
+            return word.substring(0, len - 1) + "is";
+        }
+
+        return word + "s";
     }
+
+    private StringUtils(){}
 }
