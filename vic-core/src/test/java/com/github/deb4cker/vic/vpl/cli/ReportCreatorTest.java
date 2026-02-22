@@ -2,9 +2,9 @@ package com.github.deb4cker.vic.vpl.cli;
 
 import com.github.deb4cker.vic.evaluator.analyzers.AnalysisResult;
 import com.github.deb4cker.vic.evaluator.enums.AnalysisScope;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectImplementation;
-import com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.ImplementationInconsistency;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectImplementation;
+import com.github.deb4cker.vic.evaluator.implementationflags.inconsistency.ImplementationInconsistency;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -30,8 +30,8 @@ class ReportCreatorTest {
         return new AnalysisResult(name, List.of(flags), AnalysisScope.CLASS);
     }
 
-    private static AnalysisResult relResult(String name, ImplementationFlag... flags) {
-        return new AnalysisResult(name, List.of(flags), AnalysisScope.RELATIONSHIP);
+    private static AnalysisResult relResult(ImplementationFlag... flags) {
+        return new AnalysisResult("Relacionamentos", List.of(flags), AnalysisScope.RELATIONSHIP);
     }
 
     @Nested
@@ -113,7 +113,7 @@ class ReportCreatorTest {
         @Test
         @DisplayName("scope RELATIONSHIP gera prefixo 'Análise dos'")
         void relScopePrefixIsAnalisesDos() {
-            String report = ReportCreator.create(List.of(relResult("Relacionamentos", correct("ok"))), 1);
+            String report = ReportCreator.create(List.of(relResult(correct("ok"))), 1);
             assertTrue(report.contains("Análise dos Relacionamentos"),
                     "Prefixo de RELATIONSHIP deve ser 'Análise dos'. Report:\n" + report);
         }
@@ -121,7 +121,7 @@ class ReportCreatorTest {
         @Test
         @DisplayName("CLASS é ordenado antes de RELATIONSHIP quando fornecidos fora de ordem")
         void classBeforeRelationshipInOutput() {
-            var rel = relResult("Relacionamentos", correct("a"));
+            var rel = relResult(correct("a"));
             var cls = classResult("MinhaClasse", correct("b"));
             String report = ReportCreator.create(List.of(rel, cls), 2);
             assertTrue(report.indexOf("MinhaClasse") < report.indexOf("Relacionamentos"),

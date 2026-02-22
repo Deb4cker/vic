@@ -1,10 +1,10 @@
 package com.github.deb4cker.vic.evaluator.analyzers;
 
 import com.github.deb4cker.vic.commons.enums.RelationType;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.AllRelationshipsCorrectlyImplemented;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedRelationship;
-import com.github.deb4cker.vic.evaluator.implementationFlags.inconsistency.relationship.RelationshipNotImplementedInconsistency;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.AllRelationshipsCorrectlyImplemented;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectlyImplementedRelationship;
+import com.github.deb4cker.vic.evaluator.implementationflags.inconsistency.relationship.RelationshipNotImplementedInconsistency;
 import com.github.deb4cker.vic.evaluator.models.ClassData;
 import com.github.deb4cker.vic.evaluator.models.relations.One;
 import com.github.deb4cker.vic.evaluator.models.relations.RelationshipData;
@@ -27,17 +27,17 @@ class RelationshipsAnalyzerTest {
      * JDK
      * para representar os lados do relacionamento de forma leve.
      */
-    private RelationshipData inheritance(Class<?> sub, Class<?> sup) {
+    private RelationshipData inheritance() {
         return new RelationshipData(
-                new SubClass(new ClassData(sub)),
-                new SuperClass(new ClassData(sup)),
+                new SubClass(new ClassData(Integer.class)),
+                new SuperClass(new ClassData(Number.class)),
                 RelationType.INHERITANCE);
     }
 
-    private RelationshipData oneToOne(Class<?> from, Class<?> to) {
+    private RelationshipData oneToOne() {
         return new RelationshipData(
-                new One(new ClassData(from)),
-                new One(new ClassData(to)),
+                new One(new ClassData(String.class)),
+                new One(new ClassData(Integer.class)),
                 RelationType.TO_ONE_RELATION);
     }
 
@@ -48,8 +48,8 @@ class RelationshipsAnalyzerTest {
         @Test
         @DisplayName("retorna o número de relacionamentos modelados")
         void countMatchesModeledSize() {
-            var rel1 = inheritance(Integer.class, Number.class);
-            var rel2 = oneToOne(String.class, Integer.class);
+            var rel1 = inheritance();
+            var rel2 = oneToOne();
 
             RelationshipsAnalyzer analyzer = new RelationshipsAnalyzer(List.of(rel1, rel2), List.of());
             assertEquals(2, analyzer.getRelationshipCount());
@@ -70,7 +70,7 @@ class RelationshipsAnalyzerTest {
         @Test
         @DisplayName("gera CorrectlyImplementedRelationship para cada relacionamento correto")
         void correctFlagForEachMatch() {
-            var rel = inheritance(Integer.class, Number.class);
+            var rel = inheritance();
             RelationshipsAnalyzer analyzer = new RelationshipsAnalyzer(List.of(rel), List.of(rel));
 
             List<ImplementationFlag> flags = analyzer.analyze();
@@ -82,7 +82,7 @@ class RelationshipsAnalyzerTest {
         @Test
         @DisplayName("adiciona AllRelationshipsCorrectlyImplemented quando todos corretos")
         void allRelationshipsCorrectFlagAdded() {
-            var rel = inheritance(Integer.class, Number.class);
+            var rel = inheritance();
             RelationshipsAnalyzer analyzer = new RelationshipsAnalyzer(List.of(rel), List.of(rel));
 
             List<ImplementationFlag> flags = analyzer.analyze();
@@ -99,7 +99,7 @@ class RelationshipsAnalyzerTest {
         @Test
         @DisplayName("gera RelationshipNotImplementedInconsistency para relacionamento não implementado")
         void inconsistencyFlagForMissingRelationship() {
-            var modeled = inheritance(Integer.class, Number.class);
+            var modeled = inheritance();
             RelationshipsAnalyzer analyzer = new RelationshipsAnalyzer(List.of(modeled), List.of());
 
             List<ImplementationFlag> flags = analyzer.analyze();
@@ -112,7 +112,7 @@ class RelationshipsAnalyzerTest {
         @Test
         @DisplayName("NÃO adiciona AllRelationshipsCorrectlyImplemented quando há inconsistência")
         void noAllCorrectFlagWhenMissing() {
-            var modeled = inheritance(Integer.class, Number.class);
+            var modeled = inheritance();
             RelationshipsAnalyzer analyzer = new RelationshipsAnalyzer(List.of(modeled), List.of());
 
             List<ImplementationFlag> flags = analyzer.analyze();

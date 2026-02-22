@@ -2,8 +2,8 @@ package com.github.deb4cker.vic.evaluator.inspectors.abstracts;
 
 import com.github.deb4cker.vic.evaluator.commons.interfaces.ElementStructure;
 import com.github.deb4cker.vic.evaluator.commons.interfaces.Inspector;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationFlags.factory.interfaces.InconsistencyFlagFactory;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.factory.interfaces.InconsistencyFlagFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

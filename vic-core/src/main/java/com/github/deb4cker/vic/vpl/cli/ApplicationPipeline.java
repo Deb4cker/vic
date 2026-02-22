@@ -9,7 +9,7 @@ import com.github.deb4cker.vic.uxfreader.exception.SubmittedFileWithCompilationE
 import com.github.deb4cker.vic.uxfreader.models.ParsedClassObject;
 import com.github.deb4cker.vic.uxfreader.models.ParsedDiagram;
 import com.github.deb4cker.vic.uxfreader.parser.RelationshipMapper;
-import com.github.deb4cker.vic.uxfreader.parser.UMLParser;
+import com.github.deb4cker.vic.uxfreader.parser.UXFParser;
 import com.github.deb4cker.vic.evaluator.analyzers.AnalysisResult;
 import com.github.deb4cker.vic.evaluator.analyzers.ClassAnalyser;
 import com.github.deb4cker.vic.evaluator.analyzers.RelationshipsAnalyzer;
@@ -134,9 +134,9 @@ public class ApplicationPipeline implements Loggable {
 
         List<ClassAnalyser> inspections = new ArrayList<>();
 
-        modelAndSubmissionPairs.entrySet().forEach(entry -> {
-            inspections.add(new ClassAnalyser(entry.getKey(), entry.getValue()));
-            exerciseSectionCount += entry.getKey().getNumberOfSections();
+        modelAndSubmissionPairs.forEach((key, value) -> {
+            inspections.add(new ClassAnalyser(key, value));
+            exerciseSectionCount += key.getNumberOfSections();
         });
 
         return inspections;
@@ -180,7 +180,7 @@ public class ApplicationPipeline implements Loggable {
     private ParsedDiagram parseDiagram(File uxfFile) {
         DiagramReader reader = new DiagramReader(uxfFile);
         Diagram diagram = reader.getDiagram();
-        UMLParser parser = new UMLParser();
+        UXFParser parser = new UXFParser();
         return parser.parseDiagram(diagram);
     }
 

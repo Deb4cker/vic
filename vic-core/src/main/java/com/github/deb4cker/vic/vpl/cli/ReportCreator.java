@@ -1,7 +1,7 @@
 package com.github.deb4cker.vic.vpl.cli;
 
 import com.github.deb4cker.vic.evaluator.analyzers.AnalysisResult;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
 
 import java.util.List;
 import java.util.Locale;

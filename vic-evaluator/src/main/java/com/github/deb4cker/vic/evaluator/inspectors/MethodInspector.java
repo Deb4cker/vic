@@ -1,10 +1,10 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
 import com.github.deb4cker.vic.evaluator.commons.interfaces.ParametrizedElementInspector;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedMethod;
-import com.github.deb4cker.vic.evaluator.implementationFlags.factory.impl.MethodFlagFactory;
-import com.github.deb4cker.vic.evaluator.implementationFlags.factory.impl.MethodParameterFlagFactory;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectlyImplementedMethod;
+import com.github.deb4cker.vic.evaluator.implementationflags.factory.impl.MethodFlagFactory;
+import com.github.deb4cker.vic.evaluator.implementationflags.factory.impl.MethodParameterFlagFactory;
 import com.github.deb4cker.vic.evaluator.inspectors.abstracts.AbstractInspector;
 import com.github.deb4cker.vic.evaluator.inspectors.structures.MethodStructure;
 import com.github.deb4cker.vic.evaluator.inspectors.structures.ParameterStructure;

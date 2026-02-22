@@ -1,7 +1,7 @@
 package com.github.deb4cker.vic.evaluator.analyzers;
 
 import com.github.deb4cker.vic.evaluator.enums.AnalysisScope;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
 
 import java.util.List;
 

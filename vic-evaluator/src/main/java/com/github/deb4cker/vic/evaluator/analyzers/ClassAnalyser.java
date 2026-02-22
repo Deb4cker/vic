@@ -1,8 +1,8 @@
 package com.github.deb4cker.vic.evaluator.analyzers;
 
 import com.github.deb4cker.vic.commons.interfaces.Loggable;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedClass;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectlyImplementedClass;
 import com.github.deb4cker.vic.evaluator.inspectors.AttributeInspector;
 import com.github.deb4cker.vic.evaluator.inspectors.ConstructorInspector;
 import com.github.deb4cker.vic.evaluator.inspectors.MethodInspector;

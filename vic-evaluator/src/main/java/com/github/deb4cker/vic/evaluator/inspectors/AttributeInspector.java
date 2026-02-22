@@ -1,9 +1,9 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
 import com.github.deb4cker.vic.commons.EvaluationBypassCode;
-import com.github.deb4cker.vic.evaluator.implementationFlags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationFlags.correctImplementation.CorrectlyImplementedAttribute;
-import com.github.deb4cker.vic.evaluator.implementationFlags.factory.impl.AttributeFlagFactory;
+import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectlyImplementedAttribute;
+import com.github.deb4cker.vic.evaluator.implementationflags.factory.impl.AttributeFlagFactory;
 import com.github.deb4cker.vic.evaluator.inspectors.abstracts.AbstractInspector;
 import com.github.deb4cker.vic.evaluator.inspectors.structures.AttributeStructure;
 import com.github.deb4cker.vic.commons.StringUtils;
