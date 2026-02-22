@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static com.github.deb4cker.vic.uxfreader.enums.ClassLoaderContext.SYSTEM;
 
-public class RelationshipMapper {
+public final class RelationshipMapper {
 
     public static List<RelationshipData> map(List<ClassData> classDataList) {
 
@@ -82,16 +82,12 @@ public class RelationshipMapper {
         if (genericType instanceof ParameterizedType pt) {
             Type[] typeArguments = pt.getActualTypeArguments();
 
-            if (isCollection(rawType)) {
-                if (typeArguments.length == 1 && typeArguments[0] instanceof Class<?>) {
+            if (isCollection(rawType) && typeArguments.length == 1 && typeArguments[0] instanceof Class<?>) {
                     return (Class<?>) typeArguments[0];
-                }
             }
 
-            if (isMap(rawType)) {
-                if (typeArguments.length == 2 && typeArguments[1] instanceof Class<?>) {
+            if (isMap(rawType) && typeArguments.length == 2 && typeArguments[1] instanceof Class<?>) {
                     return (Class<?>) typeArguments[1];
-                }
             }
         }
 
@@ -105,4 +101,6 @@ public class RelationshipMapper {
     private static boolean isMap(Class<?> clazz) {
         return Map.class.isAssignableFrom(clazz);
     }
+
+    private RelationshipMapper(){}
 }

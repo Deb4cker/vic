@@ -8,7 +8,7 @@ public final class EvaluationBypassCode {
             .replaceAll("[^a-zA-Z]", "")
             .toLowerCase();
 
-    public static int initValue = 1;
+    private static int initValue = 1;
 
     public static String generateEvaluationBypassCode() {
         return CODE + (++initValue);

@@ -25,15 +25,15 @@ public class UMLParser implements Loggable {
 
     private final Map<String, ClassPanel> classes = new HashMap<>();
 
-    public ParsedDiagram parseDiagram(Diagram diagram){
+    public ParsedDiagram parseDiagram(Diagram diagram) {
         resolveClassPanels(diagram.getClassElements());
         loadConnections(diagram);
 
-        List<ParsedClassObject> classes = this.classes.values().stream()
+        List<ParsedClassObject> classesOnDiagram = classes.values().stream()
                 .map(this::generateJavaClassFromUML)
                 .toList();
 
-        return new ParsedDiagram(classes);
+        return new ParsedDiagram(classesOnDiagram);
     }
 
     private ParsedClassObject generateJavaClassFromUML(ClassPanel panel) throws DiagramSyntaxErrorException {
@@ -44,23 +44,24 @@ public class UMLParser implements Loggable {
                 className,
                 Stream.of(Modifier.Keyword.PUBLIC, panel.isAbstract() ? Modifier.Keyword.ABSTRACT : null)
                         .filter(Objects::nonNull)
-                        .toArray(Modifier.Keyword[]::new)
-        );
+                        .toArray(Modifier.Keyword[]::new));
 
         String superClassParams = null;
 
-        for (Relation relation : panel.getTargets()){
+        for (Relation relation : panel.getTargets()) {
             switch (relation.type()) {
                 case INHERITANCE -> {
                     String superClassName = relation.className();
                     classDeclaration.addExtendedType(superClassName);
 
                     String[] methodSectionLines = classes.get(superClassName).getMethodSectionLines();
-                    for (String line : methodSectionLines){
-                        if (!line.contains(superClassName.concat("("))) continue;
+                    for (String line : methodSectionLines) {
+                        if (!line.contains(superClassName.concat("(")))
+                            continue;
 
                         Matcher matcher = findMethodMatcher(line);
-                        if (matcher.find()) superClassParams = matcher.group(3);
+                        if (matcher.find())
+                            superClassParams = matcher.group(3);
                         break;
                     }
                 }
@@ -71,22 +72,28 @@ public class UMLParser implements Loggable {
                     ClassOrInterfaceType listType = new ClassOrInterfaceType(null, "ArrayList");
                     listType.setTypeArguments(new ClassOrInterfaceType(null, relationClassName));
 
-                    Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED : Modifier.Keyword.PRIVATE;
-                    classDeclaration.addField(listType, EvaluationBypassCode.generateEvaluationBypassCode(), fieldModifier);
+                    Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED
+                            : Modifier.Keyword.PRIVATE;
+                    classDeclaration.addField(listType, EvaluationBypassCode.generateEvaluationBypassCode(),
+                            fieldModifier);
 
                     compilationUnit.addImport("java.util.ArrayList");
 
-                    MethodDeclaration addMethod = classDeclaration.addMethod("add" + relationClassName, Modifier.Keyword.PUBLIC);
-                    Parameter param = new Parameter(new ClassOrInterfaceType(null, relationClassName), EvaluationBypassCode.generateEvaluationBypassCode());
+                    MethodDeclaration addMethod = classDeclaration.addMethod("add" + relationClassName,
+                            Modifier.Keyword.PUBLIC);
+                    Parameter param = new Parameter(new ClassOrInterfaceType(null, relationClassName),
+                            EvaluationBypassCode.generateEvaluationBypassCode());
                     addMethod.addParameter(param);
 
-                    MethodDeclaration getMethod = classDeclaration.addMethod("get" +  StringUtils.capitalize(pluralName), Modifier.Keyword.PUBLIC);
+                    MethodDeclaration getMethod = classDeclaration.addMethod("get" + StringUtils.capitalize(pluralName),
+                            Modifier.Keyword.PUBLIC);
                     getMethod.setType(listType);
                     getMethod.setBody(new BlockStmt().addStatement("return null;"));
                 }
                 case TO_ONE_RELATION -> {
-                    Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED : Modifier.Keyword.PRIVATE;
-                    classDeclaration.addField(relation.className(), relation.className().toLowerCase() ,fieldModifier);
+                    Modifier.Keyword fieldModifier = panel.isAbstract() ? Modifier.Keyword.PROTECTED
+                            : Modifier.Keyword.PRIVATE;
+                    classDeclaration.addField(relation.className(), relation.className().toLowerCase(), fieldModifier);
                 }
             }
         }
@@ -95,7 +102,7 @@ public class UMLParser implements Loggable {
             parseField(line, classDeclaration);
         }
 
-        for (String line: panel.getMethodSectionLines()) {
+        for (String line : panel.getMethodSectionLines()) {
             line = line.trim();
             parseMethodOrConstructor(line, classDeclaration, className, superClassParams);
         }
@@ -106,28 +113,31 @@ public class UMLParser implements Loggable {
     }
 
     private void parseField(String line, ClassOrInterfaceDeclaration classDeclaration) {
-        Pattern fieldPattern = Pattern.compile("([+#-])\\s*(\\w+)\\s*:\\s*([\\w.$<>?,]+(?:\\s*\\[\\s*])*)");        Matcher matcher       = fieldPattern.matcher(line);
-        boolean patternFound  = matcher.find();
+        Pattern fieldPattern = Pattern.compile("([+#-])\\s*(\\w+)\\s*:\\s*([\\w.$<>?,]+(?:\\[\\s*])*+)");
+        Matcher matcher = fieldPattern.matcher(line);
+        boolean patternFound = matcher.find();
 
-        if (!patternFound) return;
+        if (!patternFound)
+            return;
 
         String visibility = matcher.group(1);
-        String fieldName  = matcher.group(2);
-        String fieldType  = matcher.group(3);
+        String fieldName = matcher.group(2);
+        String fieldType = matcher.group(3);
 
         FieldDeclaration field = classDeclaration.addField(fieldType, fieldName);
         switchVisibility(field, visibility);
     }
 
-    private void parseMethodOrConstructor(String line, ClassOrInterfaceDeclaration classDeclaration, String className, String superClassParams) {
+    private void parseMethodOrConstructor(String line, ClassOrInterfaceDeclaration classDeclaration, String className,
+            String superClassParams) {
         boolean isAbstract = line.startsWith("/") && line.endsWith("/");
         Matcher matcher = findMethodMatcher(line);
-        boolean patternFound  = matcher.find();
+        boolean patternFound = matcher.find();
 
         if (patternFound) {
             String visibility = matcher.group(1);
             String methodName = matcher.group(2);
-            String params     = matcher.group(3);
+            String params = matcher.group(3);
             String returnType = matcher.group(4);
             boolean isConstructor = methodName.equals(className);
 
@@ -135,13 +145,13 @@ public class UMLParser implements Loggable {
 
             if (isConstructor) {
                 BlockStmt body = new BlockStmt();
-                if(superClassParams != null) {
+                if (superClassParams != null) {
                     String paramsText = String.join(",", parseParametersCall(superClassParams));
-                    body.addStatement("super("+ paramsText +");");
+                    body.addStatement("super(" + paramsText + ");");
                 }
-                 declaration = classDeclaration
-                         .addConstructor()
-                         .setBody(body);
+                declaration = classDeclaration
+                        .addConstructor()
+                        .setBody(body);
 
                 parseParameters(params, declaration);
                 switchVisibility(declaration, visibility);
@@ -157,7 +167,7 @@ public class UMLParser implements Loggable {
             String type = returnType != null ? returnType : "void";
             methodDeclaration.setType(type);
 
-            if(isAbstract){
+            if (isAbstract) {
                 methodDeclaration.setAbstract(true);
                 methodDeclaration.removeBody();
                 return;
@@ -187,7 +197,8 @@ public class UMLParser implements Loggable {
             String[] paramArray = params.split(",");
             for (String param : paramArray) {
                 String[] paramParts = param.trim().split(":");
-                if (paramParts.length == 2) paramsList.add(paramParts[0].trim());
+                if (paramParts.length == 2)
+                    paramsList.add(paramParts[0].trim());
             }
         }
         return paramsList.toArray(new String[0]);
@@ -215,25 +226,24 @@ public class UMLParser implements Loggable {
         }
     }
 
-    public static ReturnStmt switchReturnStatement(String returnType){
+    public static ReturnStmt switchReturnStatement(String returnType) {
         return switch (returnType) {
-            case "int", "short", "long", "byte" -> new ReturnStmt(new IntegerLiteralExpr(0));
+            case "int", "short", "long", "byte" -> new ReturnStmt(new IntegerLiteralExpr("0"));
             case "float", "double" -> new ReturnStmt(new DoubleLiteralExpr(0));
             case "boolean" -> new ReturnStmt(new BooleanLiteralExpr(false));
-            case "char"    -> new ReturnStmt(new CharLiteralExpr('\u0000'));
-            default        -> new ReturnStmt(new NullLiteralExpr());
+            case "char" -> new ReturnStmt(new CharLiteralExpr('\u0000'));
+            default -> new ReturnStmt(new NullLiteralExpr());
         };
     }
 
     private Matcher findMethodMatcher(String line) {
         Pattern methodPattern = Pattern.compile(
-                "([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*([^\\s]+(?:\\s*\\[\\s*])*)?"
-        );
+                "([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*(\\S+(?:\\[\\s*])*+)?");
         return methodPattern.matcher(line);
     }
 
     private void loadConnections(Diagram diagram) {
-        for(RelationElement relationElement : diagram.getRelationElements()){
+        for (RelationElement relationElement : diagram.getRelationElements()) {
             RelationCoordinates relationCoordinates = new RelationCoordinates(relationElement);
             RelationPanel relationPanel = new RelationPanel(relationElement.getPanel_attributes(), relationCoordinates);
             Point start = relationCoordinates.getStartPoint();
@@ -271,4 +281,3 @@ public class UMLParser implements Loggable {
         });
     }
 }
-

@@ -13,7 +13,8 @@ public abstract class ImplementationFlag implements Comparable<ImplementationFla
 	private final String text;
 	
 	protected ImplementationFlag(String symbol, String text, Object... args) {
-		this.text = String.format(symbol + " " + text, args);
+        String pattern = symbol + " " + text;
+		this.text = String.format(pattern, args);
 	}
 
 	@Override
@@ -51,6 +52,6 @@ public abstract class ImplementationFlag implements Comparable<ImplementationFla
 	}
 
 	public static boolean hasInconsistencyFlagsIn(List<ImplementationFlag> flags){
-		return flags.stream().anyMatch(flag -> flag instanceof ImplementationInconsistency);
+		return flags.stream().anyMatch(ImplementationInconsistency.class::isInstance);
 	}
 }

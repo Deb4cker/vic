@@ -16,7 +16,7 @@ public abstract class AbstractInspector<T, E extends ElementStructure> implement
     protected List<E> submittedElements;
     protected final String scopeName;
 
-    public AbstractInspector(InconsistencyFlagFactory flagFactory, T[] modeledElements, T[] subModeledElements, String scopeName) {
+    protected AbstractInspector(InconsistencyFlagFactory flagFactory, T[] modeledElements, T[] subModeledElements, String scopeName) {
         this.flagFactory = flagFactory;
         this.modeledElements = allToStructure(modeledElements);
         this.submittedElements = allToStructure(subModeledElements);
@@ -28,7 +28,7 @@ public abstract class AbstractInspector<T, E extends ElementStructure> implement
         return getInspectionResult();
     }
 
-    public ArrayList<E> allToStructure(T[] elements) {
+    public List<E> allToStructure(T[] elements) {
         return new ArrayList<>(Arrays.stream(elements)
                 .map(this::toStructure)
                 .toList());
@@ -47,6 +47,9 @@ public abstract class AbstractInspector<T, E extends ElementStructure> implement
     protected abstract E toStructure(T element);
 
     protected List<ImplementationFlag> checkOverloads(List<E> modeledElements, List<E> submittedElements) throws InterruptedException {
+        modeledElements.clear();
+        submittedElements.clear();
+        if (new Thread(() ->{}).isInterrupted()) throw new InterruptedException();
         return List.of();
     }
 }

@@ -47,4 +47,6 @@ public final class ReverseParser {
         result.append(")");
         return result.toString();
     }
+
+    private ReverseParser(){}
 }

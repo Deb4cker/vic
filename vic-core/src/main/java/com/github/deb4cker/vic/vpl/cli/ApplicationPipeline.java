@@ -31,9 +31,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-
-public class ApplicationPipeline implements Loggable
-{
+public class ApplicationPipeline implements Loggable {
     private final RuntimeCompiler runtimeCompiler;
     private int exerciseSectionCount = 0;
     private final File uxfFile;
@@ -45,7 +43,7 @@ public class ApplicationPipeline implements Loggable
         this.submittedJavaFiles = submittedJavaFiles;
     }
 
-    public String run(){
+    public String run() {
         try {
             if (uxfFile == null) {
                 return "Nenhum arquivo UXF encontrado!";
@@ -73,7 +71,8 @@ public class ApplicationPipeline implements Loggable
             }
 
             VerificationResult allNecessaryFilesSubmitted = verifySubmittedFiles(modeledClasses, submittedJavaFiles);
-            if (!allNecessaryFilesSubmitted.message.isEmpty()) return allNecessaryFilesSubmitted.message;
+            if (!allNecessaryFilesSubmitted.message.isEmpty())
+                return allNecessaryFilesSubmitted.message;
 
             compileSubmittedJavaFiles(allNecessaryFilesSubmitted.validSubmittedFiles());
             List<ClassData> submittedDotClassFiles = loadSubmittedClasses();
@@ -85,14 +84,16 @@ public class ApplicationPipeline implements Loggable
             List<AnalysisResult> results = runClassInspectors(inspectors);
 
             if (!modeledRelations.isEmpty()) {
-                RelationshipsAnalyzer relationshipsAnalyzer = new RelationshipsAnalyzer(modeledRelations, submittedRelations);
-                AnalysisResult relationshipResults = new AnalysisResult(AnalysisScope.RELATIONSHIP.getValue(), relationshipsAnalyzer.analyze(), AnalysisScope.RELATIONSHIP);
+                RelationshipsAnalyzer relationshipsAnalyzer = new RelationshipsAnalyzer(modeledRelations,
+                        submittedRelations);
+                AnalysisResult relationshipResults = new AnalysisResult(AnalysisScope.RELATIONSHIP.getValue(),
+                        relationshipsAnalyzer.analyze(), AnalysisScope.RELATIONSHIP);
                 results.add(relationshipResults);
                 exerciseSectionCount += relationshipsAnalyzer.getRelationshipCount();
             }
 
             return ReportCreator.create(results, exerciseSectionCount);
-        } catch (SubmittedFileWithCompilationErrorsException e){
+        } catch (SubmittedFileWithCompilationErrorsException e) {
             return e.getMessage();
         }
     }
@@ -122,20 +123,21 @@ public class ApplicationPipeline implements Loggable
         return tempFiles;
     }
 
-    private List<ClassAnalyser> createClassInspectors(List<ClassData> modeledClasses, List<ClassData> submittedDotClassFiles) {
+    private List<ClassAnalyser> createClassInspectors(List<ClassData> modeledClasses,
+            List<ClassData> submittedDotClassFiles) {
         Map<ClassData, ClassData> modelAndSubmissionPairs = modeledClasses.stream()
                 .flatMap(model -> submittedDotClassFiles.stream()
-                        .filter(submittedClass -> StringUtils.nameWithoutExtension(submittedClass.getClassName()).equals(StringUtils.nameWithoutExtension(model.getClassName())))
-                        .map(submittedClass -> Map.entry(model, submittedClass))
-                )
+                        .filter(submittedClass -> StringUtils.nameWithoutExtension(submittedClass.getClassName())
+                                .equals(StringUtils.nameWithoutExtension(model.getClassName())))
+                        .map(submittedClass -> Map.entry(model, submittedClass)))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         List<ClassAnalyser> inspections = new ArrayList<>();
 
-        for (ClassData modelClassData : modelAndSubmissionPairs.keySet()) {
-            inspections.add(new ClassAnalyser(modelClassData, modelAndSubmissionPairs.get(modelClassData)));
-            exerciseSectionCount += modelClassData.getNumberOfSections();
-        }
+        modelAndSubmissionPairs.entrySet().forEach(entry -> {
+            inspections.add(new ClassAnalyser(entry.getKey(), entry.getValue()));
+            exerciseSectionCount += entry.getKey().getNumberOfSections();
+        });
 
         return inspections;
     }
@@ -145,29 +147,37 @@ public class ApplicationPipeline implements Loggable
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
         List<AnalysisResult> results = new ArrayList<>();
 
-        for (ClassAnalyser inspector : inspectors) {
-            executor.submit(() -> {
-                try {
-                    results.add(new AnalysisResult(inspector.getModelClassDataName(), inspector.inspectClass(), AnalysisScope.CLASS));
-
-                } catch (InterruptedException e) {
-                    throw new ApplicationException(e.getMessage());
-                }
-            });
-        }
-        executor.shutdown();
-
         try {
+            for (ClassAnalyser inspector : inspectors) {
+                executor.submit(() -> {
+                    try {
+                        results.add(new AnalysisResult(inspector.getModelClassDataName(), inspector.inspectClass(),
+                                AnalysisScope.CLASS));
+
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        throw new ApplicationException(e.getMessage());
+                    }
+                });
+            }
+            executor.shutdown();
+
             boolean terminated = executor.awaitTermination(1, TimeUnit.MINUTES);
-            if (!terminated) executor.shutdownNow();
+            if (!terminated)
+                executor.shutdownNow();
+
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             executor.shutdownNow();
+        } finally {
+            if (!executor.isTerminated())
+                executor.shutdownNow();
         }
 
         return results;
     }
 
-    private ParsedDiagram parseDiagram(File uxfFile){
+    private ParsedDiagram parseDiagram(File uxfFile) {
         DiagramReader reader = new DiagramReader(uxfFile);
         Diagram diagram = reader.getDiagram();
         UMLParser parser = new UMLParser();
@@ -185,22 +195,26 @@ public class ApplicationPipeline implements Loggable
                 .toList();
     }
 
-    private List<ClassData> loadSubmittedClasses(){
+    private List<ClassData> loadSubmittedClasses() {
         Map<String, Class<?>> compiledClasses = ((InMemoryRuntimeCompiler) runtimeCompiler).getSubmittedClasses();
         return compiledClasses.values().stream()
                 .map(ClassData::new)
                 .toList();
     }
 
-    public record VerificationResult(List<File> validSubmittedFiles, String message) {}
+    public record VerificationResult(List<File> validSubmittedFiles, String message) {
+    }
+
     public VerificationResult verifySubmittedFiles(List<ClassData> modeledClasses, List<File> submittedJavaFiles) {
-        Map<ClassData, File> respectiveSubmittedClasses =
-                modeledClasses.stream()
-                        .flatMap(classData -> submittedJavaFiles.stream()
-                                .filter(file -> StringUtils.nameWithoutExtension(file.getName())
-                                        .equals(StringUtils.nameWithoutExtension(classData.getClassName())))
-                                .map(file -> Map.entry(classData, file)))
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        Map<ClassData, File> respectiveSubmittedClasses = modeledClasses.stream()
+                .flatMap(classData -> submittedJavaFiles.stream()
+                        .filter(file -> {
+                            String submittedFileClassName = StringUtils.nameWithoutExtension(file.getName());
+                            String modeledClassName = classData.getClassSimpleName();
+                            return submittedFileClassName.equals(modeledClassName);
+                        })
+                        .map(file -> Map.entry(classData, file)))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         List<String> notMappedClasses = new ArrayList<>();
 

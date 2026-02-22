@@ -5,7 +5,7 @@ import com.github.deb4cker.vic.evaluator.models.ClassData;
 public abstract class RelationshipSide {
     protected final ClassData classData;
 
-    public RelationshipSide(ClassData classData) {
+    protected RelationshipSide(ClassData classData) {
         this.classData = classData;
     }
 
