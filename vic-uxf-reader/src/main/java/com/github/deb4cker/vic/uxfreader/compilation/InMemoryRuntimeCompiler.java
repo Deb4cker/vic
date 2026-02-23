@@ -4,7 +4,6 @@ import com.github.deb4cker.vic.uxfreader.commons.interfaces.IdentifiedClassLoade
 import com.github.deb4cker.vic.uxfreader.commons.interfaces.RuntimeCompiler;
 import com.github.deb4cker.vic.uxfreader.enums.ClassLoaderContext;
 import com.github.deb4cker.vic.uxfreader.exception.SubmittedFileWithCompilationErrorsException;
-import com.github.deb4cker.vic.commons.interfaces.Loggable;
 
 import javax.tools.*;
 import java.io.*;
@@ -15,7 +14,7 @@ import java.util.*;
 import static com.github.deb4cker.vic.uxfreader.commons.constants.CompilationErrorMessages.MODELED_CLASSES_COMPILATION_ERROR;
 import static com.github.deb4cker.vic.uxfreader.commons.constants.CompilationErrorMessages.SUBMITTED_CLASSES_COMPILATION_ERROR;
 
-public class InMemoryRuntimeCompiler implements RuntimeCompiler, Loggable {
+public class InMemoryRuntimeCompiler implements RuntimeCompiler {
     private final Map<String, InMemoryByteCode> modeledClasses = new HashMap<>();
     private final Map<String, InMemoryByteCode> submittedClasses = new HashMap<>();
     private final IdentifiedClassLoader modeledClassLoader;
@@ -102,7 +101,7 @@ public class InMemoryRuntimeCompiler implements RuntimeCompiler, Loggable {
     public Map<String, Class<?>> getSubmittedClasses() {
         return loadClasses(submittedClasses, submittedClassLoader);
     }
-
+    @SuppressWarnings("java:S106")
     private Map<String, Class<?>> loadClasses(Map<String, InMemoryByteCode> compiledClasses, IdentifiedClassLoader classLoader) {
         Map<String, Class<?>> result = new HashMap<>();
 

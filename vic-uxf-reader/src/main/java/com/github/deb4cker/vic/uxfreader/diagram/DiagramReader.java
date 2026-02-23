@@ -1,14 +1,14 @@
 package com.github.deb4cker.vic.uxfreader.diagram;
 
-import com.github.deb4cker.vic.commons.interfaces.Loggable;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 
 import java.io.File;
 
-public class DiagramReader implements Loggable
-{
+import static com.github.deb4cker.vic.commons.ApplicationIO.STANDARD_OUT;
+
+public class DiagramReader {
 
     private Unmarshaller unmarshaller;
     private File xmlFile;
@@ -19,7 +19,7 @@ public class DiagramReader implements Loggable
             JAXBContext jaxbContext = JAXBContext.newInstance(Diagram.class);
             unmarshaller = jaxbContext.createUnmarshaller();
         } catch (JAXBException e) {
-            println(e.getMessage());
+            STANDARD_OUT.println(e.getMessage());
         }
     }
 
@@ -27,17 +27,8 @@ public class DiagramReader implements Loggable
         try {
             return (Diagram) unmarshaller.unmarshal(xmlFile);
         } catch (JAXBException e) {
-            println("Não foi possível converter o diagrama! Erro: " + e.getMessage());
+            STANDARD_OUT.println("Não foi possível converter o diagrama! Erro: " + e.getMessage());
         }
         return null;
-    }
-
-    public Diagram getDiagram(File xmlFile) {
-        setXmlFile(xmlFile);
-        return getDiagram();
-    }
-
-    public void setXmlFile(File xmlFile) {
-        this.xmlFile = xmlFile;
     }
 }

@@ -3,14 +3,13 @@ package com.github.deb4cker.vic.uxfreader.parser;
 import com.github.deb4cker.vic.uxfreader.diagram.*;
 import com.github.deb4cker.vic.uxfreader.models.ParsedClassObject;
 import com.github.deb4cker.vic.uxfreader.models.ParsedDiagram;
-import com.github.deb4cker.vic.commons.interfaces.Loggable;
 import com.github.deb4cker.vic.uxfreader.parser.uxfparser.ClassCodeGenerator;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UXFParser implements Loggable {
+public class UXFParser {
 
     private final Map<String, ClassPanel> classes = new HashMap<>();
 

@@ -1,8 +1,8 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
 import com.github.deb4cker.vic.commons.EvaluationBypassCode;
-import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationflags.factory.interfaces.ParameterFlagFactory;
+import com.github.deb4cker.vic.evaluator.implementation_flags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementation_flags.factory.interfaces.ParameterFlagFactory;
 import com.github.deb4cker.vic.evaluator.inspectors.abstracts.AbstractInspector;
 import com.github.deb4cker.vic.evaluator.inspectors.structures.ParameterStructure;
 import com.github.deb4cker.vic.evaluator.inspectors.support.ElementMatcher;
