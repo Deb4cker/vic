@@ -2,9 +2,9 @@ package com.github.deb4cker.vic.vpl.cli;
 
 import com.github.deb4cker.vic.evaluator.analyzers.AnalysisResult;
 import com.github.deb4cker.vic.evaluator.enums.AnalysisScope;
-import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectImplementation;
-import com.github.deb4cker.vic.evaluator.implementationflags.inconsistency.ImplementationInconsistency;
+import com.github.deb4cker.vic.evaluator.implementation_flags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementation_flags.correct_implementation.CorrectImplementation;
+import com.github.deb4cker.vic.evaluator.implementation_flags.inconsistency.ImplementationInconsistency;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

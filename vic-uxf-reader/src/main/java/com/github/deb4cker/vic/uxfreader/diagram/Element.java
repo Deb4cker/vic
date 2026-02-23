@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "element")
+@SuppressWarnings({"java:S100", "java:S116", "java:S117"})
 public class Element implements UxfTag
 {
     protected String id;

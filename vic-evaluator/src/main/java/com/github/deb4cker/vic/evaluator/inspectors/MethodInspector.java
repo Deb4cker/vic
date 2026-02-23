@@ -1,16 +1,15 @@
 package com.github.deb4cker.vic.evaluator.inspectors;
 
 import com.github.deb4cker.vic.evaluator.commons.interfaces.ParametrizedElementInspector;
-import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
-import com.github.deb4cker.vic.evaluator.implementationflags.correctImplementation.CorrectlyImplementedMethod;
-import com.github.deb4cker.vic.evaluator.implementationflags.factory.impl.MethodFlagFactory;
-import com.github.deb4cker.vic.evaluator.implementationflags.factory.impl.MethodParameterFlagFactory;
+import com.github.deb4cker.vic.evaluator.implementation_flags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementation_flags.correct_implementation.CorrectlyImplementedMethod;
+import com.github.deb4cker.vic.evaluator.implementation_flags.factory.impl.MethodFlagFactory;
+import com.github.deb4cker.vic.evaluator.implementation_flags.factory.impl.MethodParameterFlagFactory;
 import com.github.deb4cker.vic.evaluator.inspectors.abstracts.AbstractInspector;
 import com.github.deb4cker.vic.evaluator.inspectors.structures.MethodStructure;
 import com.github.deb4cker.vic.evaluator.inspectors.structures.ParameterStructure;
 import com.github.deb4cker.vic.evaluator.utils.InspectorRunner;
 import com.github.deb4cker.vic.evaluator.utils.ReverseParser;
-import com.github.deb4cker.vic.commons.interfaces.Loggable;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -23,7 +22,7 @@ import static com.github.deb4cker.vic.evaluator.commons.constants.SemanticHelper
 import static com.github.deb4cker.vic.evaluator.commons.constants.SemanticHelpers.SINGLE_IMPLEMENTATIONS;
 
 public class MethodInspector extends AbstractInspector<Method, MethodStructure>
-        implements ParametrizedElementInspector, Loggable {
+        implements ParametrizedElementInspector {
 
     public MethodInspector(Method[] modeledMethods, Method[] submittedMethods, String className) {
         super(new MethodFlagFactory(), modeledMethods, submittedMethods, className);

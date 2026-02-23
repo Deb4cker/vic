@@ -1,7 +1,7 @@
 package com.github.deb4cker.vic.evaluator.commons.interfaces;
 
 
-import com.github.deb4cker.vic.evaluator.implementationflags.ImplementationFlag;
+import com.github.deb4cker.vic.evaluator.implementation_flags.ImplementationFlag;
 
 import java.util.List;
 

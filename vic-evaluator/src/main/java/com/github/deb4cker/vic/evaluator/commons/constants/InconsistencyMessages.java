@@ -25,7 +25,7 @@ public final class InconsistencyMessages
 	public static final String INCORRECT_METHOD_MODIFIER = "O modificador do método \"%s\" " + SHOULD_BE;
 	public static final String MISSING_METHOD_IN_CLASS = "O método \"%s\" " + NOT_PRESENT;
 
-	public static final String RELATIONSHIP_NOT_IMPLEMENTED = "O relacionameto \"%s\" não foi implementado.";
+	public static final String RELATIONSHIP_NOT_IMPLEMENTED = "O relacionamento \"%s\" não foi implementado.";
 
     private InconsistencyMessages(){}
 }
