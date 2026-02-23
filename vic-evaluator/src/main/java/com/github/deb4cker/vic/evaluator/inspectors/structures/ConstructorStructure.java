@@ -38,4 +38,10 @@ public record ConstructorStructure(String modifier, String name, Parameter[] par
 
         return 0;
     }
+
+    @Override
+    public String toString(){
+        String parameters = Arrays.toString(parameters());
+        return name + " (" + parameters + ")";
+    }
 }

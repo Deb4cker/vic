@@ -26,6 +26,7 @@ public class ClassData {
     public String getClassName() {
         return className;
     }
+
     public String getClassSimpleName() {
         return classSimpleName;
     }
@@ -38,6 +39,7 @@ public class ClassData {
         return methods;
     }
 
+    @SuppressWarnings("java:S1452")
     public Constructor<?>[] getConstructors() {
         return constructors;
     }

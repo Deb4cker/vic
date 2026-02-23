@@ -58,10 +58,9 @@ public final class MethodParser {
         if (params.isBlank())
             return;
         for (String param : params.split(",")) {
-            String[] parts = param.trim().split("\\s*:\\s*");
-            if (parts.length == 2) {
+            String[] parts = param.trim().split(":", 2);
+            if (parts.length == 2)
                 method.addParameter(parts[1].trim(), parts[0].trim());
-            }
         }
     }
 

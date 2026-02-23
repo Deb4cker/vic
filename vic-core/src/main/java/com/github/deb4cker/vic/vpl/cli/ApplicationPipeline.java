@@ -4,13 +4,12 @@ import com.github.deb4cker.vic.evaluator.analyzers.AnalysisResult;
 import com.github.deb4cker.vic.evaluator.models.ClassData;
 import com.github.deb4cker.vic.uxfreader.exception.SubmittedFileWithCompilationErrorsException;
 import com.github.deb4cker.vic.uxfreader.models.ParsedDiagram;
-import com.github.deb4cker.vic.commons.interfaces.Loggable;
 import com.github.deb4cker.vic.vpl.cli.pipeline.*;
 
 import java.io.File;
 import java.util.List;
 
-public class ApplicationPipeline implements Loggable {
+public class ApplicationPipeline {
 
     private final File uxfFile;
     private final List<File> submittedJavaFiles;

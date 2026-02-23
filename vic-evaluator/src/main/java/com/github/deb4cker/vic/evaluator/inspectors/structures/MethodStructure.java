@@ -5,6 +5,7 @@ import com.github.deb4cker.vic.evaluator.commons.interfaces.ElementStructure;
 import com.github.deb4cker.vic.evaluator.commons.interfaces.ParametrizedStructure;
 
 import java.lang.reflect.Parameter;
+import java.util.Arrays;
 import java.util.Objects;
 
 public record MethodStructure(String modifier, String name, String returnType, Parameter[] parameters) implements ElementStructure, ParametrizedStructure {
@@ -18,5 +19,11 @@ public record MethodStructure(String modifier, String name, String returnType, P
     @Override
     public int hashCode() {
         return Objects.hash(modifier, name, returnType);
+    }
+
+    @Override
+    public String toString(){
+        String parameters = Arrays.toString(parameters());
+        return name + " (" + parameters + ")";
     }
 }

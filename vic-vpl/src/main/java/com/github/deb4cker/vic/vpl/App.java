@@ -15,13 +15,13 @@ import java.util.stream.Stream;
 
 import static com.github.deb4cker.vic.vpl.cli.commons.constants.FileExtension.JAVA;
 import static com.github.deb4cker.vic.vpl.cli.commons.constants.FileExtension.UXF;
+import static com.github.deb4cker.vic.commons.ApplicationIO.*;
 
-public class App
-{
+public class App {
     private static final String LOCAL_FOLDER = "./";
     private static final String LOCAL_DEVELOPMENT_FOLDER = "local-dev/";
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         boolean hasArgs = args.length > 0 && args[0] != null;
 
         boolean isDevelopment = hasArgs && args[0].equals("-d");
@@ -30,35 +30,36 @@ public class App
             return;
         }
 
-        evaluateImplementation(LOCAL_FOLDER, hasArgs? args[0] : null);
+        evaluateImplementation(LOCAL_FOLDER, hasArgs ? args[0] : null);
     }
 
-    //----------------------------------------------------------------------------
-    private static void evaluateImplementation(String folder, String uxfName){
+    // ----------------------------------------------------------------------------
+    private static void evaluateImplementation(String folder, String uxfName) {
         File uxfFile = checkForUxfFile(folder, uxfName);
         List<File> submittedJavaFiles = checkForJavaFiles(folder);
         String result = new ApplicationPipeline(uxfFile, submittedJavaFiles).run();
         Printer.printDirectlyToConsole(result);
     }
 
-
     private static File checkForUxfFile(String folder, String uxfName) {
         List<Predicate<File>> predicates = new ArrayList<>();
         predicates.add(file -> file.getName().endsWith(UXF));
 
-        if (uxfName != null){
+        if (uxfName != null) {
             String filename = uxfName.replace(UXF, "");
             predicates.add(file -> file.getName().replace(UXF, "").equals(filename));
         }
 
         List<File> submittedUxfFiles = getFilesByFolderPath(predicates, folder);
-        if (submittedUxfFiles.isEmpty()) return null;
+        if (submittedUxfFiles.isEmpty())
+            return null;
         return submittedUxfFiles.get(0);
     }
 
     private static List<File> checkForJavaFiles(String folder) {
         List<File> javaFiles = getFilesByFolderPath(List.of(file -> file.getName().endsWith(JAVA)), folder);
-        if (javaFiles.isEmpty()) return List.of();
+        if (javaFiles.isEmpty())
+            return List.of();
         return javaFiles;
     }
 
@@ -69,7 +70,7 @@ public class App
                     .filter(file -> filters.stream().allMatch(filter -> filter.test(file)))
                     .toList();
         } catch (IOException e) {
-            System.out.println("Nenhum arquivo encontrado em " + e.getMessage());
+            STANDARD_OUT.println("Nenhum arquivo encontrado em " + e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -78,7 +79,7 @@ public class App
         Path devRoot = Paths.get(LOCAL_DEVELOPMENT_FOLDER);
 
         if (!Files.exists(devRoot) || !Files.isDirectory(devRoot)) {
-            System.out.println("A pasta '" + LOCAL_DEVELOPMENT_FOLDER + "' não existe.");
+            STANDARD_OUT.println("A pasta '" + LOCAL_DEVELOPMENT_FOLDER + "' não existe.");
             return;
         }
 
@@ -91,11 +92,11 @@ public class App
 
             Path specificFolder = devRoot.resolve(folderName);
             if (!Files.exists(specificFolder) || !Files.isDirectory(specificFolder)) {
-                System.out.println("A pasta especificada '" + specificFolder + "' não existe.");
+                STANDARD_OUT.println("A pasta especificada '" + specificFolder + "' não existe.");
                 return;
             }
 
-            System.out.println("Rodando localmente em: " + specificFolder);
+            STANDARD_OUT.println("Rodando localmente em: " + specificFolder);
             evaluateImplementation(specificFolder.toString(), uxfName);
             return;
         }
@@ -106,7 +107,7 @@ public class App
                     .toList();
 
             if (directories.isEmpty()) {
-                System.out.println("Nenhuma subpasta encontrada em " + LOCAL_DEVELOPMENT_FOLDER);
+                STANDARD_OUT.println("Nenhuma subpasta encontrada em " + LOCAL_DEVELOPMENT_FOLDER);
                 return;
             }
 
@@ -114,21 +115,20 @@ public class App
                 try (Stream<Path> files = Files.list(dir)) {
                     boolean hasRelevantFiles = files
                             .map(Path::toFile)
-                            .anyMatch(file ->
-                                    file.getName().endsWith(JAVA) ||
-                                            file.getName().endsWith(UXF));
+                            .anyMatch(file -> file.getName().endsWith(JAVA) ||
+                                    file.getName().endsWith(UXF));
 
                     if (!hasRelevantFiles) {
-                        System.out.println("Ignorando " + dir + ": nenhum arquivo .java ou .uxf encontrado.");
+                        STANDARD_OUT.println("Ignorando " + dir + ": nenhum arquivo .java ou .uxf encontrado.");
                         continue;
                     }
                 }
 
-                System.out.println("Rodando " + dir);
+                STANDARD_OUT.println("Rodando " + dir);
                 evaluateImplementation(dir.toString(), null);
             }
         } catch (IOException e) {
-            System.err.println("Erro ao listar diretórios em " + LOCAL_DEVELOPMENT_FOLDER + ": " + e.getMessage());
+            ERROR_OUT.println("Erro ao listar diretórios em " + LOCAL_DEVELOPMENT_FOLDER + ": " + e.getMessage());
         }
     }
 }

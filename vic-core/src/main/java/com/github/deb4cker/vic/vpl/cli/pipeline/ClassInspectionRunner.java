@@ -56,6 +56,7 @@ public final class ClassInspectionRunner {
         return new InspectionOutcome(results, sectionCount[0]);
     }
 
+    @SuppressWarnings("java:S2095")
     private static List<AnalysisResult> runInParallel(List<ClassAnalyser> inspectors) {
         int numThreads = Runtime.getRuntime().availableProcessors();
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
