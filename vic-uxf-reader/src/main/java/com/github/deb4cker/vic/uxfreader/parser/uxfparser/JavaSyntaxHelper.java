@@ -32,9 +32,10 @@ public final class JavaSyntaxHelper {
         };
     }
 
+    private static final Pattern METHOD_PATTERN = Pattern.compile(
+            "([+#-])\\s*+(\\w+)\\s*+\\(\\s*+(.*?)\\s*+\\)\\s*+:?\\s*+(\\S+(?:\\[\\s*+])*+)?");
+
     static Matcher findMethodMatcher(String line) {
-        Pattern methodPattern = Pattern.compile(
-                "([+#-])\\s*(\\w+)\\s*\\(\\s*(.*?)\\s*\\)\\s*:?\\s*(\\S+(?:\\[\\s*])*+)?");
-        return methodPattern.matcher(line);
+        return METHOD_PATTERN.matcher(line);
     }
 }
