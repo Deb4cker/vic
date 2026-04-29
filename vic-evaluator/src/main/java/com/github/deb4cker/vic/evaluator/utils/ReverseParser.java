@@ -9,6 +9,10 @@ import java.lang.reflect.Parameter;
 
 public final class ReverseParser {
     public static String completeMethodSignatureOf(MethodStructure method) {
+        return methodSignatureOf(method) + (method.returnType() != null ? ": " + method.returnType() : "");
+    }
+
+    public static String methodSignatureOf(MethodStructure method) {
         StringBuilder result = new StringBuilder(method.name());
         result.append("(");
 
@@ -22,10 +26,6 @@ public final class ReverseParser {
             result.delete(result.length() - 2, result.length());
         }
         result.append(")");
-
-        if (method.returnType() != null) {
-            result.append(": ").append(method.returnType());
-        }
 
         return result.toString();
     }

@@ -3,6 +3,7 @@ package com.github.deb4cker.vic.evaluator.inspectors;
 import com.github.deb4cker.vic.evaluator.commons.interfaces.ParametrizedElementInspector;
 import com.github.deb4cker.vic.evaluator.implementation_flags.ImplementationFlag;
 import com.github.deb4cker.vic.evaluator.implementation_flags.correct_implementation.CorrectlyImplementedMethod;
+import com.github.deb4cker.vic.evaluator.implementation_flags.correct_implementation.CorrectlyImplementedOverloadedMethod;
 import com.github.deb4cker.vic.evaluator.implementation_flags.factory.impl.MethodFlagFactory;
 import com.github.deb4cker.vic.evaluator.implementation_flags.factory.impl.MethodParameterFlagFactory;
 import com.github.deb4cker.vic.evaluator.inspectors.abstracts.AbstractInspector;
@@ -133,6 +134,12 @@ public class MethodInspector extends AbstractInspector<Method, MethodStructure>
         inspection.start();
         inspection.join();
 
-        flags.addAll(inspection.getFlags());
+        List<ImplementationFlag> parameterFlags = new ArrayList<>(inspection.getFlags());
+        flags.addAll(parameterFlags);
+
+        if (!ImplementationFlag.hasInconsistencyFlagsIn(parameterFlags)) {
+            String shortSignature = ReverseParser.methodSignatureOf(modelMethod);
+            flags.add(new CorrectlyImplementedOverloadedMethod(shortSignature));
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.github.deb4cker.vic.evaluator.implementation_flags;
 
 import com.github.deb4cker.vic.evaluator.implementation_flags.correct_implementation.CorrectImplementation;
+import com.github.deb4cker.vic.evaluator.implementation_flags.correct_implementation.CorrectlyImplementedOverloadedMethod;
 import com.github.deb4cker.vic.evaluator.implementation_flags.inconsistency.ImplementationInconsistency;
 import com.github.deb4cker.vic.evaluator.implementation_flags.warning.ImplementationWarning;
 
@@ -12,7 +13,7 @@ public abstract class ImplementationFlag implements Comparable<ImplementationFla
 	private final String text;
 	
 	protected ImplementationFlag(String symbol, String text, Object... args) {
-        String pattern = symbol + " " + text;
+        String pattern = (symbol + " " + text).trim();
 		this.text = String.format(pattern, args);
 	}
 
@@ -47,7 +48,7 @@ public abstract class ImplementationFlag implements Comparable<ImplementationFla
 	}
 
 	public static boolean isCorrectFlag(ImplementationFlag flag){
-		return flag instanceof CorrectImplementation;
+		return flag instanceof CorrectImplementation || flag instanceof CorrectlyImplementedOverloadedMethod;
 	}
 
 	public static boolean hasInconsistencyFlagsIn(List<ImplementationFlag> flags){
