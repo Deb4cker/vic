@@ -1,10 +1,9 @@
 package com.github.deb4cker.vic.evaluator.implementation_flags.correct_implementation;
 
-import com.github.deb4cker.vic.evaluator.commons.constants.Symbols;
-import com.github.deb4cker.vic.evaluator.implementation_flags.ImplementationFlag;
+import static com.github.deb4cker.vic.evaluator.commons.constants.CorrectImplementationMessages.CORRECT_IMPLEMENTATION_OF_OVERLOAD;
 
-public class CorrectlyImplementedOverloadedMethod extends ImplementationFlag {
-    public CorrectlyImplementedOverloadedMethod(String signature) {
-        super(Symbols.CORRECT_SYMBOL + " " + signature, "");
+public class CorrectlyImplementedOverloadedMethod extends CorrectImplementation {
+    public CorrectlyImplementedOverloadedMethod(String overloadName) {
+        super(CORRECT_IMPLEMENTATION_OF_OVERLOAD, overloadName);
     }
 }
